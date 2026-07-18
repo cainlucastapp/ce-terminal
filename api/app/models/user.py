@@ -27,7 +27,7 @@ class User(db.Model):
     def validate_name(self, key, value):
         if not value or not value.strip():
             raise ValueError(f"{key} is required")
-        return value
+        return value.strip()
 
     # must match a basic email shape
     @validates("email")

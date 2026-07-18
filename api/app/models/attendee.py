@@ -12,7 +12,7 @@ class Attendee(db.Model):
     __tablename__ = "attendees"
 
     # rejects an exact duplicate of the same person/course/date; 
-    # corrections are handled by deleting the bad record and importing again, not by overwrite
+    # corrections are handled by deleting the bad record and importing again
     __table_args__ = (
         db.UniqueConstraint(
             "course_id",

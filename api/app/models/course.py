@@ -45,6 +45,13 @@ class Course(db.Model):
         onupdate=lambda: datetime.now(timezone.utc),
     )
 
+    # must not be blank
+    @validates("course_name", "course_number", "sponsored_by", "signer_name")
+    def validate_required_text(self, key, value):
+        if not value or not value.strip():
+            raise ValueError(f"{key} is required")
+        return value.strip()
+
     # if set, must be one of CERTIFICATE_TEMPLATE_KEYS
     @validates("certificate_template_key")
     def validate_certificate_template_key(self, key, value):
