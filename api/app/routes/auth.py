@@ -1,7 +1,7 @@
 # api/app/routes/auth.py
 
 from flask import Blueprint, jsonify, request
-from flask_login import login_required, login_user, logout_user
+from flask_login import current_user, login_required, login_user, logout_user
 from sqlalchemy.exc import IntegrityError
 
 from app.extensions import db
@@ -53,3 +53,9 @@ def login():
 def logout():
     logout_user()
     return "", 204
+
+
+@auth_bp.route("/me", methods=["GET"])
+@login_required
+def get_me():
+    return jsonify(current_user.to_dict()), 200

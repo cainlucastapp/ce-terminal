@@ -4,7 +4,7 @@ from flask import Flask, jsonify
 from werkzeug.exceptions import HTTPException
 
 from app.config import Config
-from app.extensions import db, login_manager, migrate
+from app.extensions import cors, db, login_manager, migrate
 
 
 def create_app():
@@ -14,6 +14,7 @@ def create_app():
     db.init_app(app)
     migrate.init_app(app, db)
     login_manager.init_app(app)
+    cors.init_app(app, supports_credentials=True, origins=app.config["CORS_ORIGINS"])
 
     from app.models import attendee, course, user
 
