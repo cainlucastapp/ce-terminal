@@ -56,5 +56,15 @@ class Attendee(db.Model):
             raise ValueError(f"{key} is required")
         return value.strip()
 
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "course_id": self.course_id,
+            "public_id": self.public_id,
+            "student_name": self.student_name,
+            "student_license_number": self.student_license_number,
+            "completion_date": self.completion_date.isoformat(),
+        }
+
     def __repr__(self):
         return f"<Attendee id={self.id} public_id={self.public_id!r}>"

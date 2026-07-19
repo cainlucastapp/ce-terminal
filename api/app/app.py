@@ -27,15 +27,17 @@ def create_app():
     def unauthorized():
         return jsonify({"error": "authentication required"}), 401
 
-    # every abort()/HTTP error gets JSON, not Flask's default HTML page
+    # every abort()/HTTP error gets JSON
     @app.errorhandler(HTTPException)
     def handle_http_exception(error):
         return jsonify({"error": error.description}), error.code
 
+    from app.routes.attendees import attendees_bp
     from app.routes.auth import auth_bp
     from app.routes.courses import courses_bp
 
     app.register_blueprint(auth_bp)
     app.register_blueprint(courses_bp)
+    app.register_blueprint(attendees_bp)
 
     return app
