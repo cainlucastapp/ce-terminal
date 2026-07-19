@@ -57,7 +57,7 @@ class User(UserMixin, db.Model):
 
     # compares a login attempt against the stored hash
     def check_password(self, plaintext):
-        if not self.password_hash:
+        if not plaintext or not self.password_hash:
             return False
         return bcrypt.checkpw(
             plaintext.encode("utf-8"), self.password_hash.encode("utf-8")
