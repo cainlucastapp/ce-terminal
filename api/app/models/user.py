@@ -4,6 +4,7 @@ import re
 from datetime import datetime, timezone
 
 import bcrypt
+from flask_login import UserMixin
 from sqlalchemy.orm import validates
 
 from app.extensions import db
@@ -11,7 +12,7 @@ from app.extensions import db
 EMAIL_PATTERN = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
 
 
-class User(db.Model):
+class User(UserMixin, db.Model):
     __tablename__ = "users"
 
     id = db.Column(db.Integer, primary_key=True)
@@ -22,17 +23,17 @@ class User(db.Model):
     created_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
     updated_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc),)
 
-    # must not be blank
+    # must be a non-blank string
     @validates("first_name", "last_name")
     def validate_name(self, key, value):
-        if not value or not value.strip():
+        if not isinstance(value, str) or not value.strip():
             raise ValueError(f"{key} is required")
         return value.strip()
 
-    # must match a basic email shape
+    # must be a string matching a basic email shape
     @validates("email")
     def validate_email(self, key, value):
-        if not value or not value.strip():
+        if not isinstance(value, str) or not value.strip():
             raise ValueError("email is malformed")
         cleaned = value.strip().lower()
         if not EMAIL_PATTERN.match(cleaned):
@@ -47,7 +48,7 @@ class User(db.Model):
     # hashes and stores the plaintext password
     @password.setter
     def password(self, plaintext):
-        if not plaintext or len(plaintext) < 8:
+        if not isinstance(plaintext, str) or len(plaintext) < 8:
             raise ValueError("password must be at least 8 characters long")
         encoded = plaintext.encode("utf-8")
         if len(encoded) > 72:
@@ -56,11 +57,20 @@ class User(db.Model):
 
     # compares a login attempt against the stored hash
     def check_password(self, plaintext):
-        if not self.password_hash:
+        if not isinstance(plaintext, str) or not self.password_hash:
             return False
         return bcrypt.checkpw(
             plaintext.encode("utf-8"), self.password_hash.encode("utf-8")
         )
+
+    # never includes password_hash
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "first_name": self.first_name,
+            "last_name": self.last_name,
+            "email": self.email,
+        }
 
     def __repr__(self):
         return f"<User id={self.id} email={self.email!r}>"
