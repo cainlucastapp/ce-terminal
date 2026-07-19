@@ -69,9 +69,9 @@ def create_course():
 def get_course(course_id):
     course = Course.query.get(course_id)
     if not course:
-        abort(404)
+        abort(404, description="course not found")
     if course.user_id != current_user.id:
-        abort(403)
+        abort(403, description="you don't have access to this course")
 
     return jsonify(course.to_dict()), 200
 
@@ -81,9 +81,9 @@ def get_course(course_id):
 def update_course(course_id):
     course = Course.query.get(course_id)
     if not course:
-        abort(404)
+        abort(404, description="course not found")
     if course.user_id != current_user.id:
-        abort(403)
+        abort(403, description="you don't have access to this course")
 
     data = request.get_json(silent=True) or {}
 
@@ -126,9 +126,9 @@ def update_course(course_id):
 def delete_course(course_id):
     course = Course.query.get(course_id)
     if not course:
-        abort(404)
+        abort(404, description="course not found")
     if course.user_id != current_user.id:
-        abort(403)
+        abort(403, description="you don't have access to this course")
 
     db.session.delete(course)
     db.session.commit()

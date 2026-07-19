@@ -19,9 +19,9 @@ attendees_bp = Blueprint(
 def _get_owned_course(course_id):
     course = Course.query.get(course_id)
     if not course:
-        abort(404)
+        abort(404, description="course not found")
     if course.user_id != current_user.id:
-        abort(403)
+        abort(403, description="you don't have access to this course")
     return course
 
 
@@ -30,7 +30,7 @@ def _get_owned_course(course_id):
 def _get_attendee(course, attendee_id):
     attendee = Attendee.query.filter_by(id=attendee_id, course_id=course.id).first()
     if not attendee:
-        abort(404)
+        abort(404, description="attendee not found")
     return attendee
 
 

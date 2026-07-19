@@ -51,7 +51,7 @@ def search_certificates():
 def get_certificate(public_id):
     attendee = Attendee.query.filter_by(public_id=public_id).first()
     if not attendee:
-        abort(404)
+        abort(404, description="certificate not found")
     course = attendee.course
 
     # excludes id/user_id/course_id — this is a public, unauthenticated route
