@@ -1,11 +1,12 @@
 # api/app/routes/courses.py
 
-from flask import Blueprint, abort, jsonify, request
+from flask import Blueprint, abort, jsonify
 from flask_login import current_user, login_required
 from sqlalchemy.exc import IntegrityError
 
 from app.extensions import db
 from app.models.course import Course
+from app.utils.helpers import get_json_body, get_pagination_params
 
 courses_bp = Blueprint("courses", __name__, url_prefix="/api/courses")
 
@@ -13,8 +14,7 @@ courses_bp = Blueprint("courses", __name__, url_prefix="/api/courses")
 @courses_bp.route("", methods=["GET"])
 @login_required
 def list_courses():
-    page = request.args.get("page", 1, type=int)
-    per_page = request.args.get("per_page", 10, type=int)
+    page, per_page = get_pagination_params()
 
     pagination = Course.query.filter_by(user_id=current_user.id).paginate(
         page=page, per_page=per_page, error_out=False
@@ -34,7 +34,7 @@ def list_courses():
 @courses_bp.route("", methods=["POST"])
 @login_required
 def create_course():
-    data = request.get_json(silent=True) or {}
+    data = get_json_body()
 
     try:
         course = Course(
@@ -85,7 +85,7 @@ def update_course(course_id):
     if course.user_id != current_user.id:
         abort(403, description="you don't have access to this course")
 
-    data = request.get_json(silent=True) or {}
+    data = get_json_body()
 
     try:
         if "certificate_template_key" in data:

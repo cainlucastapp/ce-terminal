@@ -4,6 +4,7 @@ from flask import Blueprint, abort, jsonify, request
 
 from app.models.attendee import Attendee
 from app.models.course import Course
+from app.utils.helpers import get_pagination_params
 
 certificates_bp = Blueprint("certificates", __name__, url_prefix="/api/certificates")
 
@@ -26,8 +27,7 @@ def search_certificates():
     if not state or not license_number:
         return jsonify({"error": "state and license_number are required"}), 400
 
-    page = request.args.get("page", 1, type=int)
-    per_page = request.args.get("per_page", 10, type=int)
+    page, per_page = get_pagination_params()
 
     pagination = (
         Attendee.query.join(Course)

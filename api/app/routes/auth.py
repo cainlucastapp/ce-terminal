@@ -1,18 +1,19 @@
 # api/app/routes/auth.py
 
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify
 from flask_login import current_user, login_required, login_user, logout_user
 from sqlalchemy.exc import IntegrityError
 
 from app.extensions import db
 from app.models.user import User
+from app.utils.helpers import get_json_body
 
 auth_bp = Blueprint("auth", __name__, url_prefix="/api/auth")
 
 
 @auth_bp.route("/signup", methods=["POST"])
 def signup():
-    data = request.get_json(silent=True) or {}
+    data = get_json_body()
 
     try:
         user = User(
@@ -37,8 +38,9 @@ def signup():
 
 @auth_bp.route("/login", methods=["POST"])
 def login():
-    data = request.get_json(silent=True) or {}
-    email = (data.get("email") or "").strip().lower()
+    data = get_json_body()
+    email_raw = data.get("email")
+    email = email_raw.strip().lower() if isinstance(email_raw, str) else ""
     user = User.query.filter_by(email=email).first()
 
     if not user or not user.check_password(data.get("password")):

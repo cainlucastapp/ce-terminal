@@ -2,13 +2,14 @@
 
 from datetime import date
 
-from flask import Blueprint, abort, jsonify, request
+from flask import Blueprint, abort, jsonify
 from flask_login import current_user, login_required
 from sqlalchemy.exc import IntegrityError
 
 from app.extensions import db
 from app.models.attendee import Attendee
 from app.models.course import Course
+from app.utils.helpers import get_json_body, get_pagination_params
 
 attendees_bp = Blueprint(
     "attendees", __name__, url_prefix="/api/courses/<int:course_id>/attendees"
@@ -48,9 +49,7 @@ def _parse_completion_date(value):
 @login_required
 def list_attendees(course_id):
     course = _get_owned_course(course_id)
-
-    page = request.args.get("page", 1, type=int)
-    per_page = request.args.get("per_page", 10, type=int)
+    page, per_page = get_pagination_params()
 
     pagination = Attendee.query.filter_by(course_id=course.id).paginate(
         page=page, per_page=per_page, error_out=False
@@ -71,7 +70,7 @@ def list_attendees(course_id):
 @login_required
 def create_attendee(course_id):
     course = _get_owned_course(course_id)
-    data = request.get_json(silent=True) or {}
+    data = get_json_body()
 
     try:
         attendee = Attendee(
@@ -106,7 +105,7 @@ def get_attendee(course_id, attendee_id):
 def update_attendee(course_id, attendee_id):
     course = _get_owned_course(course_id)
     attendee = _get_attendee(course, attendee_id)
-    data = request.get_json(silent=True) or {}
+    data = get_json_body()
 
     try:
         if "student_name" in data:
