@@ -89,5 +89,20 @@ class Course(db.Model):
             raise ValueError(f"hours must be one of {COURSE_HOURS}")
         return value
 
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "user_id": self.user_id,
+            "certificate_template_key": self.certificate_template_key,
+            "course_name": self.course_name,
+            "course_number": self.course_number,
+            "course_type": self.course_type,
+            "sponsored_by": self.sponsored_by,
+            "state": self.state,
+            "hours": self.hours,
+            "course_category": self.course_category,
+            "signer_name": self.signer_name,
+        }
+
     def __repr__(self):
         return f"<Course id={self.id} course_number={self.course_number!r}>"
