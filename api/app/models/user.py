@@ -4,6 +4,7 @@ import re
 from datetime import datetime, timezone
 
 import bcrypt
+from flask_login import UserMixin
 from sqlalchemy.orm import validates
 
 from app.extensions import db
@@ -11,7 +12,7 @@ from app.extensions import db
 EMAIL_PATTERN = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
 
 
-class User(db.Model):
+class User(UserMixin, db.Model):
     __tablename__ = "users"
 
     id = db.Column(db.Integer, primary_key=True)
@@ -61,6 +62,15 @@ class User(db.Model):
         return bcrypt.checkpw(
             plaintext.encode("utf-8"), self.password_hash.encode("utf-8")
         )
+
+    # never includes password_hash
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "first_name": self.first_name,
+            "last_name": self.last_name,
+            "email": self.email,
+        }
 
     def __repr__(self):
         return f"<User id={self.id} email={self.email!r}>"
