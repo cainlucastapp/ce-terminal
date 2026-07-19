@@ -48,11 +48,10 @@ class Attendee(db.Model):
         onupdate=lambda: datetime.now(timezone.utc),
     )
 
-    # must match the name/number as printed on the real estate license;
-    # format isn't verified since license_number may have letter prefixes/suffixes
+    # must be a non-blank string matching the name/number as printed on the
     @validates("student_name", "student_license_number")
     def validate_required_text(self, key, value):
-        if not value or not value.strip():
+        if not isinstance(value, str) or not value.strip():
             raise ValueError(f"{key} is required")
         return value.strip()
 

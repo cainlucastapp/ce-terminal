@@ -14,6 +14,15 @@ from app.config import (
 from app.extensions import db
 
 
+# field name -> its allowed-values source of truth, shared by one validator below
+_ENUM_FIELDS = {
+    "course_type": COURSE_TYPES,
+    "state": STATES,
+    "course_category": COURSE_CATEGORIES,
+    "hours": COURSE_HOURS,
+}
+
+
 class Course(db.Model):
     __tablename__ = "courses"
 
@@ -45,10 +54,10 @@ class Course(db.Model):
         onupdate=lambda: datetime.now(timezone.utc),
     )
 
-    # must not be blank
+    # must be a non-blank string
     @validates("course_name", "course_number", "sponsored_by", "signer_name")
     def validate_required_text(self, key, value):
-        if not value or not value.strip():
+        if not isinstance(value, str) or not value.strip():
             raise ValueError(f"{key} is required")
         return value.strip()
 
@@ -61,32 +70,12 @@ class Course(db.Model):
             )
         return value
 
-    # must be one of COURSE_TYPES
-    @validates("course_type")
-    def validate_course_type(self, key, value):
-        if value not in COURSE_TYPES:
-            raise ValueError(f"course_type must be one of {COURSE_TYPES}")
-        return value
-
-    # must be one of STATES
-    @validates("state")
-    def validate_state(self, key, value):
-        if value not in STATES:
-            raise ValueError(f"state must be one of {STATES}")
-        return value
-
-    # must be one of COURSE_CATEGORIES
-    @validates("course_category")
-    def validate_course_category(self, key, value):
-        if value not in COURSE_CATEGORIES:
-            raise ValueError(f"course_category must be one of {COURSE_CATEGORIES}")
-        return value
-
-    # must be one of COURSE_HOURS
-    @validates("hours")
-    def validate_hours(self, key, value):
-        if value not in COURSE_HOURS:
-            raise ValueError(f"hours must be one of {COURSE_HOURS}")
+    # must be one of that field's allowed values (see _ENUM_FIELDS)
+    @validates(*_ENUM_FIELDS.keys())
+    def validate_enum_field(self, key, value):
+        allowed = _ENUM_FIELDS[key]
+        if value not in allowed:
+            raise ValueError(f"{key} must be one of {allowed}")
         return value
 
     def to_dict(self):

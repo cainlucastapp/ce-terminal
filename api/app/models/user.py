@@ -23,17 +23,17 @@ class User(UserMixin, db.Model):
     created_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
     updated_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc),)
 
-    # must not be blank
+    # must be a non-blank string
     @validates("first_name", "last_name")
     def validate_name(self, key, value):
-        if not value or not value.strip():
+        if not isinstance(value, str) or not value.strip():
             raise ValueError(f"{key} is required")
         return value.strip()
 
-    # must match a basic email shape
+    # must be a string matching a basic email shape
     @validates("email")
     def validate_email(self, key, value):
-        if not value or not value.strip():
+        if not isinstance(value, str) or not value.strip():
             raise ValueError("email is malformed")
         cleaned = value.strip().lower()
         if not EMAIL_PATTERN.match(cleaned):
@@ -48,7 +48,7 @@ class User(UserMixin, db.Model):
     # hashes and stores the plaintext password
     @password.setter
     def password(self, plaintext):
-        if not plaintext or len(plaintext) < 8:
+        if not isinstance(plaintext, str) or len(plaintext) < 8:
             raise ValueError("password must be at least 8 characters long")
         encoded = plaintext.encode("utf-8")
         if len(encoded) > 72:
@@ -57,7 +57,7 @@ class User(UserMixin, db.Model):
 
     # compares a login attempt against the stored hash
     def check_password(self, plaintext):
-        if not plaintext or not self.password_hash:
+        if not isinstance(plaintext, str) or not self.password_hash:
             return False
         return bcrypt.checkpw(
             plaintext.encode("utf-8"), self.password_hash.encode("utf-8")
