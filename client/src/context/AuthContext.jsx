@@ -11,8 +11,6 @@ import { AuthContext } from './auth-context'
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null)
-  // true until the initial GET /auth/me resolves, so routes don't redirect
-  // to /login before we know whether a session cookie is already valid
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
