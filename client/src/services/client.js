@@ -10,8 +10,6 @@ export class ApiError extends Error {
   }
 }
 
-// every request sends the session cookie and expects/sends JSON; the backend
-// always returns {"error": "..."} on failure, so that's what callers see
 export async function apiFetch(path, { headers, ...options } = {}) {
   const response = await fetch(`${BASE_URL}${path}`, {
     credentials: 'include',
