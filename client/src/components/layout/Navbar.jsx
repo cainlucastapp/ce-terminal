@@ -29,7 +29,7 @@ export function Navbar() {
         ) : (
           <>
             <Link to="/student">Students</Link>
-            <Link to="/login">Provider</Link>
+            <Link to="/login">Providers</Link>
           </>
         )}
       </div>
