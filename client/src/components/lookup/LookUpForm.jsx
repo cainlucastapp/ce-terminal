@@ -1,8 +1,10 @@
 // client/src/components/lookup/LookUpForm.jsx
 
 import { useEffect, useState } from 'react'
+import { useCertificatePdf } from '../../hooks/useCertificatePdf'
 import { getConfig } from '../../services/config'
 import { searchCertificates } from '../../services/certificates'
+import { formatDisplayDate } from '../../utils/formatDate'
 
 export function LookUpForm() {
   const [options, setOptions] = useState(null)
@@ -15,6 +17,8 @@ export function LookUpForm() {
   const [result, setResult] = useState(null)
   const [searchError, setSearchError] = useState(null)
   const [isSearching, setIsSearching] = useState(false)
+
+  const { openCertificate, openingId, error: openError } = useCertificatePdf()
 
   // search option fetch
   useEffect(() => {
@@ -121,6 +125,7 @@ export function LookUpForm() {
       </form>
 
       {searchError && <p role="alert">{searchError}</p>}
+      {openError && <p role="alert">{openError}</p>}
 
       {/* results */}
       {result && (
@@ -131,7 +136,20 @@ export function LookUpForm() {
             <ul className="lookup-results">
               {result.items.map((item) => (
                 <li key={item.public_id}>
-                  {item.course_name} ({item.course_number}) — completed {item.completion_date}
+                  <a
+                    href="#"
+                    onClick={(event) => {
+                      event.preventDefault()
+                      if (openingId !== item.public_id) {
+                        openCertificate(item.public_id)
+                      }
+                    }}
+                    aria-disabled={openingId === item.public_id}
+                  >
+                    {item.course_name} ({item.course_number}) — completed{' '}
+                    {formatDisplayDate(item.completion_date)}
+                    {openingId === item.public_id ? ' (opening…)' : ''}
+                  </a>
                 </li>
               ))}
             </ul>
