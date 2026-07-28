@@ -1,13 +1,19 @@
 // client/src/pages/HomePage.jsx
 
-import { LookUpForm } from '../components/lookup/LookUpForm'
-
 export function HomePage() {
   return (
     <section>
       <h1>CE Terminal</h1>
-      <p>Manage continuing education courses and attendee certificates.</p>
-      <LookUpForm />
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua.
+      </p>
+      <p>
+        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
+        nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+        reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+        pariatur.
+      </p>
     </section>
   )
 }
