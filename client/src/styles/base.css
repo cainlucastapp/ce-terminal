@@ -8,7 +8,7 @@
   --color-text: #1c2b39;
   --color-text-muted: #5b6b79;
   --color-primary: #1d4e89;
-  --color-primary-hover: #163c68;
+  --color-primary-hover: #4a7fc9;
   --color-danger: #b3261e;
   --color-danger-hover: #8f1e18;
   --color-focus: #7fa8d9;
@@ -54,8 +54,66 @@ h3 {
 
 a {
   color: var(--color-primary);
+  text-decoration: none;
 }
 
 a:hover {
   color: var(--color-primary-hover);
+}
+
+a:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+/* Layout */
+main {
+  max-width: var(--max-width-content);
+  margin: 0 auto;
+  padding: var(--space-4);
+}
+
+/* Buttons */
+button {
+  font: inherit;
+  padding: var(--space-2) var(--space-4);
+  border: none;
+  border-radius: var(--radius-sm);
+  background: var(--color-primary);
+  color: #fff;
+  cursor: pointer;
+}
+
+button:hover:not(:disabled) {
+  background: var(--color-primary-hover);
+}
+
+button:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Dropdowns */
+select {
+  font: inherit;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+
+select:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+select:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
