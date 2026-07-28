@@ -15,7 +15,7 @@ export function Navbar() {
   return (
     <nav className="navbar">
       <Link to="/" className="navbar-brand">
-        CE Certificates
+        CE Terminal
       </Link>
       <div className="navbar-links">
         {user ? (
@@ -28,8 +28,8 @@ export function Navbar() {
           </>
         ) : (
           <>
-            <Link to="/login">Log in</Link>
-            <Link to="/signup">Sign up</Link>
+            <Link to="/student">Students</Link>
+            <Link to="/login">Provider</Link>
           </>
         )}
       </div>
