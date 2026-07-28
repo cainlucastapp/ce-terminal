@@ -1,0 +1,61 @@
+/* client/src/styles/base.css */
+
+:root {
+  /* Colors */
+  --color-bg: #f4f6f8;
+  --color-surface: #ffffff;
+  --color-border: #c7d0d9;
+  --color-text: #1c2b39;
+  --color-text-muted: #5b6b79;
+  --color-primary: #1d4e89;
+  --color-primary-hover: #163c68;
+  --color-danger: #b3261e;
+  --color-danger-hover: #8f1e18;
+  --color-focus: #7fa8d9;
+
+  /* Fonts */
+  --font-sans: Arial, Helvetica, system-ui, sans-serif;
+
+  /* Spacing */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+
+  /* Layout */
+  --radius-sm: 4px;
+  --max-width-content: 900px;
+}
+
+/* Reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Base */
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--color-text);
+  background: var(--color-bg);
+}
+
+h1,
+h2,
+h3 {
+  line-height: 1.25;
+}
+
+a {
+  color: var(--color-primary);
+}
+
+a:hover {
+  color: var(--color-primary-hover);
+}
