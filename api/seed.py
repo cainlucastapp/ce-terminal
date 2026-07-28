@@ -48,19 +48,19 @@ with app.app_context():
     attendee_1 = Attendee(
         course_id=course_1.id,
         student_name="Sam Student",
-        student_license_number="NV-12345",
+        student_license_number="S.0012345",
         completion_date=date(2026, 1, 15),
     )
     attendee_2 = Attendee(
         course_id=course_1.id,
         student_name="Alex Attendee",
-        student_license_number="NV-67890",
+        student_license_number="BS.0067890.LLC",
         completion_date=date(2026, 1, 15),
     )
     attendee_3 = Attendee(
         course_id=course_2.id,
         student_name="Sam Student",
-        student_license_number="NV-12345",
+        student_license_number="S.0012345",
         completion_date=date(2026, 2, 1),
     )
     db.session.add_all([attendee_1, attendee_2, attendee_3])

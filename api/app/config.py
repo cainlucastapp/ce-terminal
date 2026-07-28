@@ -60,3 +60,7 @@ COURSE_HOURS = (1, 3)
 
 # Course.certificate_template_key
 CERTIFICATE_TEMPLATE_KEYS = ("NRED",)
+
+# license number prefix/suffix
+LICENSE_PREFIXES = ("B", "BS", "PM", "S")
+LICENSE_SUFFIXES = ("INDV", "LLC")
