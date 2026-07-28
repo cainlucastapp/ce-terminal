@@ -36,11 +36,13 @@ def create_app():
     from app.routes.attendees import attendees_bp
     from app.routes.auth import auth_bp
     from app.routes.certificates import certificates_bp
+    from app.routes.config import config_bp
     from app.routes.courses import courses_bp
 
     app.register_blueprint(auth_bp)
     app.register_blueprint(courses_bp)
     app.register_blueprint(attendees_bp)
     app.register_blueprint(certificates_bp)
+    app.register_blueprint(config_bp)
 
     return app
