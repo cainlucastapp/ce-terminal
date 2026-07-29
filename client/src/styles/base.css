@@ -1,0 +1,176 @@
+/* client/src/styles/base.css */
+
+:root {
+  /* Colors */
+  --color-bg: #f4f6f8;
+  --color-surface: #ffffff;
+  --color-border: #c7d0d9;
+  --color-text: #1c2b39;
+  --color-text-muted: #5b6b79;
+  --color-primary: #1d4e89;
+  --color-primary-hover: #4a7fc9;
+  --color-danger: #b3261e;
+  --color-danger-hover: #8f1e18;
+  --color-focus: #7fa8d9;
+
+  /* Fonts */
+  --font-sans: Arial, Helvetica, system-ui, sans-serif;
+
+  /* Spacing */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+
+  /* Layout */
+  --radius-sm: 4px;
+  --max-width-content: 900px;
+}
+
+/* Reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Base */
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--color-text);
+  background: var(--color-bg);
+}
+
+h1,
+h2,
+h3 {
+  line-height: 1.25;
+}
+
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--color-primary-hover);
+}
+
+a:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+/* Layout */
+main {
+  max-width: var(--max-width-content);
+  margin: 0 auto;
+  padding: var(--space-4);
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+}
+
+/* Item lists */
+.item-list {
+  list-style: none;
+  margin: var(--space-4) 0 0;
+  padding: 0;
+}
+
+.item-list li {
+  padding: var(--space-3) 0;
+  border-top: 1px solid var(--color-border);
+}
+
+.item-list li:last-child {
+  border-bottom: 1px solid var(--color-border);
+}
+
+/* Buttons */
+button {
+  font: inherit;
+  padding: var(--space-2) var(--space-4);
+  border: none;
+  border-radius: var(--radius-sm);
+  background: var(--color-primary);
+  color: #fff;
+  cursor: pointer;
+}
+
+button:hover:not(:disabled) {
+  background: var(--color-primary-hover);
+}
+
+button:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.button-link {
+  display: inline-block;
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-sm);
+  background: var(--color-primary);
+  color: #fff;
+}
+
+.button-link:hover {
+  background: var(--color-primary-hover);
+  color: #fff;
+}
+
+/* Dropdowns */
+select {
+  font: inherit;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+
+select:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+select:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Inputs */
+input {
+  font: inherit;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+
+input:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

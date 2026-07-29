@@ -8,11 +8,16 @@ import { ApiError } from '../services/client'
 export function LoginPage() {
   const { login } = useAuth()
   const navigate = useNavigate()
+
+  // form field values
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+
+  // submit state
   const [error, setError] = useState(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
 
+  // login submit handler
   async function handleSubmit(event) {
     event.preventDefault()
     setError(null)
@@ -30,7 +35,7 @@ export function LoginPage() {
   return (
     <section className="auth-page">
       <h1>Log in</h1>
-      <form onSubmit={handleSubmit}>
+      <form className="app-form" onSubmit={handleSubmit}>
         <label htmlFor="email">Email</label>
         <input
           id="email"

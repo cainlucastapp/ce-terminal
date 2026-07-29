@@ -51,7 +51,9 @@ export function DashboardPage() {
       <h1>Welcome, {user.first_name}</h1>
 
       <p>
-        <Link to="/courses/new">New course</Link>
+        <Link to="/courses/new" className="button-link">
+          New Course
+        </Link>
       </p>
 
       {error && <p role="alert">{error}</p>}
@@ -82,14 +84,14 @@ export function DashboardPage() {
           {result.items.length === 0 ? (
             <p>No courses yet.</p>
           ) : (
-            <ul className="course-list">
+            <ul className="course-list item-list">
               {result.items.map((course) => (
                 <li key={course.id}>
                   <Link to={`/courses/${course.id}`}>{course.course_name}</Link>
                   {' — '}
                   {course.course_number} — {course.state}
                   <button type="button" onClick={() => handleStartImport(course)}>
-                    Import attendees
+                    Import Attendees
                   </button>
 
                   {/* inline importer */}

@@ -1,0 +1,24 @@
+/* client/src/styles/forms.css */
+
+/* Fields */
+.app-form label {
+  display: block;
+  margin-top: var(--space-3);
+  margin-bottom: var(--space-1);
+  font-weight: bold;
+}
+
+.app-form label:first-of-type {
+  margin-top: 0;
+}
+
+.app-form select,
+.app-form input {
+  display: block;
+  width: 100%;
+}
+
+.app-form button[type='submit'] {
+  width: 100%;
+  margin-top: var(--space-4);
+}

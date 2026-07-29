@@ -15,21 +15,20 @@ export function Navbar() {
   return (
     <nav className="navbar">
       <Link to="/" className="navbar-brand">
-        CE Certificates
+        CE Terminal
       </Link>
       <div className="navbar-links">
         {user ? (
           <>
             <Link to="/dashboard">Dashboard</Link>
-            <span className="navbar-user">{user.first_name}</span>
             <button type="button" onClick={handleLogout}>
               Log out
             </button>
           </>
         ) : (
           <>
-            <Link to="/login">Log in</Link>
-            <Link to="/signup">Sign up</Link>
+            <Link to="/student">Students</Link>
+            <Link to="/login">Providers</Link>
           </>
         )}
       </div>

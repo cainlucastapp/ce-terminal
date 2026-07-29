@@ -11,11 +11,15 @@ export function CourseFormPage() {
   const isEditMode = Boolean(courseId)
   const navigate = useNavigate()
 
+  // form data
   const [options, setOptions] = useState(null)
   const [course, setCourse] = useState(null)
+
+  // load state
   const [error, setError] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
 
+  // config + course fetch
   useEffect(() => {
     async function load() {
       setIsLoading(true)
@@ -36,6 +40,7 @@ export function CourseFormPage() {
     load()
   }, [courseId, isEditMode])
 
+  // create/update submit handler
   async function handleSubmit(values) {
     const saved = isEditMode ? await updateCourse(courseId, values) : await createCourse(values)
     navigate(`/courses/${saved.id}`)
@@ -51,7 +56,7 @@ export function CourseFormPage() {
 
   return (
     <section>
-      <h1>{isEditMode ? 'Edit course' : 'New course'}</h1>
+      <h1>{isEditMode ? 'Edit Course' : 'New Course'}</h1>
       <CourseForm
         initialValues={course ?? undefined}
         options={options}
