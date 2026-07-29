@@ -99,11 +99,11 @@ export function CourseDetailPage() {
     <section>
       <h1>{course.course_name}</h1>
       <dl>
-        <dt>Course number</dt>
+        <dt>Course Number</dt>
         <dd>{course.course_number}</dd>
         <dt>Type</dt>
         <dd>{course.course_type}</dd>
-        <dt>Sponsored by</dt>
+        <dt>Sponsored By</dt>
         <dd>{course.sponsored_by}</dd>
         <dt>State</dt>
         <dd>{course.state}</dd>
@@ -111,9 +111,9 @@ export function CourseDetailPage() {
         <dd>{course.hours}</dd>
         <dt>Category</dt>
         <dd>{course.course_category}</dd>
-        <dt>Signer name</dt>
+        <dt>Signer Name</dt>
         <dd>{course.signer_name}</dd>
-        <dt>Certificate template</dt>
+        <dt>Certificate Template</dt>
         <dd>{course.certificate_template_key || 'None'}</dd>
       </dl>
       <div className="course-actions">
