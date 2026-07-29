@@ -1,0 +1,53 @@
+/* client/src/styles/home.css */
+
+/* Hero */
+.home-page {
+  text-align: center;
+  padding: var(--space-6) 0;
+}
+
+.home-logo {
+  max-width: 320px;
+  width: 100%;
+  height: auto;
+}
+
+.home-tagline {
+  max-width: 480px;
+  margin: var(--space-4) auto 0;
+  color: var(--color-text-muted);
+  font-size: 1.125rem;
+}
+
+/* Actions */
+.home-actions {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-top: var(--space-5);
+}
+
+/* Features */
+.home-features {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-5);
+  margin-top: var(--space-6);
+  text-align: left;
+}
+
+.home-features h2 {
+  margin-bottom: var(--space-2);
+}
+
+.home-features p {
+  margin: 0;
+  color: var(--color-text-muted);
+}
+
+@media (min-width: 640px) {
+  .home-features {
+    grid-template-columns: 1fr 1fr;
+  }
+}
