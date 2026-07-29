@@ -42,7 +42,7 @@ export function CourseForm({ initialValues, options, onSubmit, submitLabel }) {
   }
 
   return (
-    <form className="course-form" onSubmit={handleSubmit}>
+    <form className="course-form app-form" onSubmit={handleSubmit}>
       <label htmlFor="course_name">Course name</label>
       <input
         id="course_name"
