@@ -5,6 +5,12 @@
   text-align: center;
 }
 
+.student-note {
+  max-width: 480px;
+  margin: var(--space-3) auto 0;
+  color: var(--color-text-muted);
+}
+
 /* Card */
 .lookup-form {
   max-width: 480px;
