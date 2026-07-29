@@ -8,13 +8,18 @@ import { ApiError } from '../services/client'
 export function SignupPage() {
   const { signup } = useAuth()
   const navigate = useNavigate()
+
+  // form field values
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+
+  // submit state
   const [error, setError] = useState(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
 
+  // signup submit handler
   async function handleSubmit(event) {
     event.preventDefault()
     setError(null)
@@ -32,8 +37,8 @@ export function SignupPage() {
   return (
     <section className="auth-page">
       <h1>Sign up</h1>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="firstName">First name</label>
+      <form className="app-form" onSubmit={handleSubmit}>
+        <label htmlFor="firstName">First Name</label>
         <input
           id="firstName"
           type="text"
@@ -42,7 +47,7 @@ export function SignupPage() {
           required
         />
 
-        <label htmlFor="lastName">Last name</label>
+        <label htmlFor="lastName">Last Name</label>
         <input
           id="lastName"
           type="text"
