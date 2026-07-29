@@ -33,32 +33,38 @@ export function AttendeeForm({ initialValues, onSubmit, onCancel, submitLabel })
 
   return (
     <form className="attendee-form" onSubmit={handleSubmit}>
-      <label htmlFor="student_name">Student name</label>
-      <input
-        id="student_name"
-        type="text"
-        value={values.student_name}
-        onChange={handleChange('student_name')}
-        required
-      />
+      <div className="attendee-form-field">
+        <label htmlFor="student_name">Student Name</label>
+        <input
+          id="student_name"
+          type="text"
+          value={values.student_name}
+          onChange={handleChange('student_name')}
+          required
+        />
+      </div>
 
-      <label htmlFor="student_license_number">License number</label>
-      <input
-        id="student_license_number"
-        type="text"
-        value={values.student_license_number}
-        onChange={handleChange('student_license_number')}
-        required
-      />
+      <div className="attendee-form-field">
+        <label htmlFor="student_license_number">License Number</label>
+        <input
+          id="student_license_number"
+          type="text"
+          value={values.student_license_number}
+          onChange={handleChange('student_license_number')}
+          required
+        />
+      </div>
 
-      <label htmlFor="completion_date">Completion date</label>
-      <input
-        id="completion_date"
-        type="date"
-        value={values.completion_date}
-        onChange={handleChange('completion_date')}
-        required
-      />
+      <div className="attendee-form-field">
+        <label htmlFor="completion_date">Completion Date</label>
+        <input
+          id="completion_date"
+          type="date"
+          value={values.completion_date}
+          onChange={handleChange('completion_date')}
+          required
+        />
+      </div>
 
       {error && <p role="alert">{error}</p>}
 

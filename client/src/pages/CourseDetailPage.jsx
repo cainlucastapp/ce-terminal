@@ -137,36 +137,51 @@ export function CourseDetailPage() {
           {attendeesResult.items.length === 0 ? (
             <p>No attendees yet.</p>
           ) : (
-            <ul className="attendee-list item-list">
-              {/* inline edit row */}
-              {attendeesResult.items.map((attendee) =>
-                editingAttendeeId === attendee.id ? (
-                  <li key={attendee.id}>
-                    <AttendeeForm
-                      initialValues={attendee}
-                      onSubmit={(values) => handleUpdateAttendee(attendee.id, values)}
-                      onCancel={() => setEditingAttendeeId(null)}
-                      submitLabel="Save changes"
-                    />
-                  </li>
-                ) : (
-                  <li key={attendee.id}>
-                    {attendee.student_name} — {attendee.student_license_number} —{' '}
-                    {attendee.completion_date}
-                    <button type="button" onClick={() => setEditingAttendeeId(attendee.id)}>
-                      Edit
-                    </button>
-                    <button
-                      type="button"
-                      className="button-danger"
-                      onClick={() => handleDeleteAttendee(attendee.id)}
-                    >
-                      Delete
-                    </button>
-                  </li>
-                ),
-              )}
-            </ul>
+            <table className="attendee-table">
+              <thead>
+                <tr>
+                  <th>Student Name</th>
+                  <th>License Number</th>
+                  <th>Completion Date</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                {/* inline edit row */}
+                {attendeesResult.items.map((attendee) =>
+                  editingAttendeeId === attendee.id ? (
+                    <tr key={attendee.id}>
+                      <td colSpan={4}>
+                        <AttendeeForm
+                          initialValues={attendee}
+                          onSubmit={(values) => handleUpdateAttendee(attendee.id, values)}
+                          onCancel={() => setEditingAttendeeId(null)}
+                          submitLabel="Save"
+                        />
+                      </td>
+                    </tr>
+                  ) : (
+                    <tr key={attendee.id}>
+                      <td>{attendee.student_name}</td>
+                      <td>{attendee.student_license_number}</td>
+                      <td>{attendee.completion_date}</td>
+                      <td>
+                        <button type="button" onClick={() => setEditingAttendeeId(attendee.id)}>
+                          Edit
+                        </button>
+                        <button
+                          type="button"
+                          className="button-danger"
+                          onClick={() => handleDeleteAttendee(attendee.id)}
+                        >
+                          Delete
+                        </button>
+                      </td>
+                    </tr>
+                  ),
+                )}
+              </tbody>
+            </table>
           )}
 
           {/* pagination */}
