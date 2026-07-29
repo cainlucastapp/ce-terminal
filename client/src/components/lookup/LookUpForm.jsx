@@ -138,7 +138,7 @@ export function LookUpForm() {
           {result.items.length === 0 ? (
             <p>No certificates found.</p>
           ) : (
-            <ul className="lookup-results">
+            <ul className="lookup-results item-list">
               {result.items.map((item) => (
                 <li key={item.public_id}>
                   <a
