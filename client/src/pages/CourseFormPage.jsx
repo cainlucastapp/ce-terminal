@@ -56,7 +56,7 @@ export function CourseFormPage() {
 
   return (
     <section>
-      <h1>{isEditMode ? 'Edit course' : 'New course'}</h1>
+      <h1>{isEditMode ? 'Edit Course' : 'New Course'}</h1>
       <CourseForm
         initialValues={course ?? undefined}
         options={options}

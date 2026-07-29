@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 
+// default field values
 const EMPTY_VALUES = {
   course_name: '',
   course_number: '',
@@ -16,14 +17,19 @@ const EMPTY_VALUES = {
 
 // shared by CourseFormPage in both create and edit mode
 export function CourseForm({ initialValues, options, onSubmit, submitLabel }) {
+  // form field values
   const [values, setValues] = useState({ ...EMPTY_VALUES, ...initialValues })
+
+  // submit state
   const [error, setError] = useState(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
 
+  // form field change handler
   function handleChange(field) {
     return (event) => setValues((current) => ({ ...current, [field]: event.target.value }))
   }
 
+  // create/update submit handler
   async function handleSubmit(event) {
     event.preventDefault()
     setError(null)
@@ -43,7 +49,7 @@ export function CourseForm({ initialValues, options, onSubmit, submitLabel }) {
 
   return (
     <form className="course-form app-form" onSubmit={handleSubmit}>
-      <label htmlFor="course_name">Course name</label>
+      <label htmlFor="course_name">Course Name</label>
       <input
         id="course_name"
         type="text"
@@ -52,7 +58,7 @@ export function CourseForm({ initialValues, options, onSubmit, submitLabel }) {
         required
       />
 
-      <label htmlFor="course_number">Course number</label>
+      <label htmlFor="course_number">Course Number</label>
       <input
         id="course_number"
         type="text"
@@ -61,7 +67,7 @@ export function CourseForm({ initialValues, options, onSubmit, submitLabel }) {
         required
       />
 
-      <label htmlFor="course_type">Course type</label>
+      <label htmlFor="course_type">Course Type</label>
       <select id="course_type" value={values.course_type} onChange={handleChange('course_type')} required>
         <option value="" disabled>
           Select a course type
@@ -73,7 +79,7 @@ export function CourseForm({ initialValues, options, onSubmit, submitLabel }) {
         ))}
       </select>
 
-      <label htmlFor="sponsored_by">Sponsored by</label>
+      <label htmlFor="sponsored_by">Sponsored By</label>
       <input
         id="sponsored_by"
         type="text"
@@ -123,7 +129,7 @@ export function CourseForm({ initialValues, options, onSubmit, submitLabel }) {
         ))}
       </select>
 
-      <label htmlFor="signer_name">Signer name</label>
+      <label htmlFor="signer_name">Signer Name</label>
       <input
         id="signer_name"
         type="text"
@@ -132,7 +138,7 @@ export function CourseForm({ initialValues, options, onSubmit, submitLabel }) {
         required
       />
 
-      <label htmlFor="certificate_template_key">Certificate template</label>
+      <label htmlFor="certificate_template_key">Certificate Template</label>
       <select
         id="certificate_template_key"
         value={values.certificate_template_key}
