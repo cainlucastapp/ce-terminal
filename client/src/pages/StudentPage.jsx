@@ -4,8 +4,8 @@ import { LookUpForm } from '../components/lookup/LookUpForm'
 
 export function StudentPage() {
   return (
-    <section>
-      <h1>Find my certificate</h1>
+    <section className="student-page">
+      <h1>Find Your Certificate</h1>
       <LookUpForm />
     </section>
   )

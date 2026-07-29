@@ -7,17 +7,21 @@ import { searchCertificates } from '../../services/certificates'
 import { formatDisplayDate } from '../../utils/formatDate'
 
 export function LookUpForm() {
+  // search options (dropdown data)
   const [options, setOptions] = useState(null)
   const [optionsError, setOptionsError] = useState(null)
 
+  // form field values
   const [values, setValues] = useState({ state: '', prefix: '', number: '', suffix: '' })
 
+  // search state
   const [query, setQuery] = useState(null)
   const [page, setPage] = useState(1)
   const [result, setResult] = useState(null)
   const [searchError, setSearchError] = useState(null)
   const [isSearching, setIsSearching] = useState(false)
 
+  // certificate pdf opening
   const { openCertificate, openingId, error: openError } = useCertificatePdf()
 
   // search option fetch
@@ -51,6 +55,7 @@ export function LookUpForm() {
     search()
   }, [query, page])
 
+  // form field change handler
   function handleChange(field) {
     return (event) => setValues((current) => ({ ...current, [field]: event.target.value }))
   }
@@ -75,11 +80,11 @@ export function LookUpForm() {
 
   return (
     <div className="lookup-form">
-      <form onSubmit={handleSubmit}>
+      <form className="app-form" onSubmit={handleSubmit}>
         <label htmlFor="lookup-state">State</label>
         <select id="lookup-state" value={values.state} onChange={handleChange('state')} required>
           <option value="" disabled>
-            Select a state
+            Select a State
           </option>
           {options.states.map((state) => (
             <option key={state} value={state}>
@@ -88,10 +93,10 @@ export function LookUpForm() {
           ))}
         </select>
 
-        <label htmlFor="lookup-prefix">License prefix</label>
+        <label htmlFor="lookup-prefix">License Prefix</label>
         <select id="lookup-prefix" value={values.prefix} onChange={handleChange('prefix')} required>
           <option value="" disabled>
-            Select a prefix
+            Select a Prefix
           </option>
           {options.license_prefixes.map((prefix) => (
             <option key={prefix} value={prefix}>
@@ -100,7 +105,7 @@ export function LookUpForm() {
           ))}
         </select>
 
-        <label htmlFor="lookup-number">License number</label>
+        <label htmlFor="lookup-number">License Number</label>
         <input
           id="lookup-number"
           type="text"
@@ -109,7 +114,7 @@ export function LookUpForm() {
           required
         />
 
-        <label htmlFor="lookup-suffix">License suffix</label>
+        <label htmlFor="lookup-suffix">License Suffix (If Applicable)</label>
         <select id="lookup-suffix" value={values.suffix} onChange={handleChange('suffix')}>
           <option value="">None</option>
           {options.license_suffixes.map((suffix) => (

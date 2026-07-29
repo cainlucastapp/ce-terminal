@@ -1,0 +1,46 @@
+/* client/src/styles/lookup.css */
+
+/* Page heading */
+.student-page {
+  text-align: center;
+}
+
+/* Card */
+.lookup-form {
+  max-width: 480px;
+  margin: var(--space-5) auto;
+  padding: var(--space-5);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  text-align: left;
+}
+
+/* Results */
+.lookup-results {
+  list-style: none;
+  margin: var(--space-4) 0 0;
+  padding: 0;
+}
+
+.lookup-results li {
+  border-top: 1px solid var(--color-border);
+}
+
+.lookup-results li:last-child {
+  border-bottom: 1px solid var(--color-border);
+}
+
+.lookup-results a {
+  display: block;
+  padding: var(--space-3) 0;
+}
+
+.lookup-results a:hover {
+  background: var(--color-bg);
+}
+
+.lookup-results a[aria-disabled='true'] {
+  opacity: 0.6;
+  pointer-events: none;
+}
