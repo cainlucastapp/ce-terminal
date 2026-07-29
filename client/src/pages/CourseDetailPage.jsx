@@ -10,10 +10,12 @@ export function CourseDetailPage() {
   const { courseId } = useParams()
   const navigate = useNavigate()
 
+  // course state
   const [course, setCourse] = useState(null)
   const [error, setError] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
 
+  // attendee list state
   const [attendeesPage, setAttendeesPage] = useState(1)
   const [attendeesResult, setAttendeesResult] = useState(null)
   const [attendeesError, setAttendeesError] = useState(null)
@@ -114,11 +116,15 @@ export function CourseDetailPage() {
         <dt>Certificate template</dt>
         <dd>{course.certificate_template_key || 'None'}</dd>
       </dl>
-      <Link to={`/courses/${course.id}/edit`}>Edit</Link>
-      <button type="button" onClick={handleDeleteCourse}>
-        Delete
-      </button>
-      <Link to="/dashboard">Back to dashboard</Link>
+      <div className="course-actions">
+        <Link to={`/courses/${course.id}/edit`} className="button-link">
+          Edit
+        </Link>
+        <button type="button" className="button-danger" onClick={handleDeleteCourse}>
+          Delete
+        </button>
+        <Link to="/dashboard">Back to dashboard</Link>
+      </div>
 
       <h2>Attendees</h2>
 
@@ -131,7 +137,7 @@ export function CourseDetailPage() {
           {attendeesResult.items.length === 0 ? (
             <p>No attendees yet.</p>
           ) : (
-            <ul className="attendee-list">
+            <ul className="attendee-list item-list">
               {/* inline edit row */}
               {attendeesResult.items.map((attendee) =>
                 editingAttendeeId === attendee.id ? (
@@ -150,7 +156,11 @@ export function CourseDetailPage() {
                     <button type="button" onClick={() => setEditingAttendeeId(attendee.id)}>
                       Edit
                     </button>
-                    <button type="button" onClick={() => handleDeleteAttendee(attendee.id)}>
+                    <button
+                      type="button"
+                      className="button-danger"
+                      onClick={() => handleDeleteAttendee(attendee.id)}
+                    >
                       Delete
                     </button>
                   </li>

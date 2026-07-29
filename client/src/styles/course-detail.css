@@ -1,0 +1,37 @@
+/* client/src/styles/course-detail.css */
+
+/* Course info */
+dl {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: var(--space-2) var(--space-4);
+  margin: var(--space-4) 0;
+}
+
+dt {
+  color: var(--color-text-muted);
+}
+
+dd {
+  margin: 0;
+}
+
+/* Actions */
+.course-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  margin: var(--space-4) 0;
+}
+
+/* Attendee rows */
+.attendee-list li {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.attendee-list > li > button:first-of-type {
+  margin-left: auto;
+}
