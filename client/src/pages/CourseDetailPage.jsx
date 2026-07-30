@@ -5,6 +5,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom'
 import { AttendeeForm } from '../components/attendees/AttendeeForm'
 import { deleteAttendee, listAttendees, updateAttendee } from '../services/attendees'
 import { deleteCourse, getCourse } from '../services/courses'
+import { formatDisplayDate } from '../utils/formatDate'
 
 export function CourseDetailPage() {
   const { courseId } = useParams()
@@ -164,7 +165,7 @@ export function CourseDetailPage() {
                     <tr key={attendee.id}>
                       <td>{attendee.student_name}</td>
                       <td>{attendee.student_license_number}</td>
-                      <td>{attendee.completion_date}</td>
+                      <td>{formatDisplayDate(attendee.completion_date)}</td>
                       <td>
                         <button type="button" onClick={() => setEditingAttendeeId(attendee.id)}>
                           Edit
