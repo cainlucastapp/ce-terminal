@@ -3,7 +3,9 @@
 import { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { AttendeeForm } from '../components/attendees/AttendeeForm'
-import { deleteAttendee, listAttendees, updateAttendee } from '../services/attendees'
+import { AttendeeSearch } from '../components/attendees/AttendeeSearch'
+import { useAttendeeSearch } from '../hooks/useAttendeeSearch'
+import { deleteAttendee, updateAttendee } from '../services/attendees'
 import { deleteCourse, getCourse } from '../services/courses'
 import { formatDisplayDate } from '../utils/formatDate'
 
@@ -16,11 +18,20 @@ export function CourseDetailPage() {
   const [error, setError] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
 
-  // attendee list state
-  const [attendeesPage, setAttendeesPage] = useState(1)
-  const [attendeesResult, setAttendeesResult] = useState(null)
-  const [attendeesError, setAttendeesError] = useState(null)
+  // attendee search + pagination
+  const {
+    query,
+    setQuery,
+    page,
+    setPage,
+    pageItems,
+    totalPages,
+    isLoading: isAttendeesLoading,
+    error: attendeesError,
+    refresh: refreshAttendees,
+  } = useAttendeeSearch(courseId)
   const [editingAttendeeId, setEditingAttendeeId] = useState(null)
+  const [deleteError, setDeleteError] = useState(null)
 
   // course fetch
   useEffect(() => {
@@ -37,23 +48,6 @@ export function CourseDetailPage() {
     }
     load()
   }, [courseId])
-
-  // attendee list fetch
-  useEffect(() => {
-    async function loadAttendees() {
-      try {
-        setAttendeesResult(await listAttendees(courseId, { page: attendeesPage }))
-      } catch (err) {
-        setAttendeesError(err.message || 'failed to load attendees')
-      }
-    }
-    loadAttendees()
-  }, [courseId, attendeesPage])
-
-  // attendee list refetch
-  async function refreshAttendees() {
-    setAttendeesResult(await listAttendees(courseId, { page: attendeesPage }))
-  }
 
   // course delete handler
   async function handleDeleteCourse() {
@@ -84,7 +78,7 @@ export function CourseDetailPage() {
       await deleteAttendee(courseId, attendeeId)
       await refreshAttendees()
     } catch (err) {
-      setAttendeesError(err.message || 'failed to delete attendee')
+      setDeleteError(err.message || 'failed to delete attendee')
     }
   }
 
@@ -129,14 +123,17 @@ export function CourseDetailPage() {
 
       <h2>Attendees</h2>
 
-      {attendeesError && <p role="alert">{attendeesError}</p>}
+      <AttendeeSearch value={query} onChange={setQuery} />
 
-      {!attendeesResult ? (
+      {attendeesError && <p role="alert">{attendeesError}</p>}
+      {deleteError && <p role="alert">{deleteError}</p>}
+
+      {isAttendeesLoading ? (
         <p role="status">Loading…</p>
       ) : (
         <>
-          {attendeesResult.items.length === 0 ? (
-            <p>No attendees yet.</p>
+          {pageItems.length === 0 ? (
+            <p>{query ? 'No matching attendees.' : 'No attendees yet.'}</p>
           ) : (
             <table className="attendee-table">
               <thead>
@@ -149,7 +146,7 @@ export function CourseDetailPage() {
               </thead>
               <tbody>
                 {/* inline edit row */}
-                {attendeesResult.items.map((attendee) =>
+                {pageItems.map((attendee) =>
                   editingAttendeeId === attendee.id ? (
                     <tr key={attendee.id}>
                       <td colSpan={4}>
@@ -186,22 +183,18 @@ export function CourseDetailPage() {
           )}
 
           {/* pagination */}
-          {attendeesResult.pages > 1 && (
+          {totalPages > 1 && (
             <div className="pagination">
-              <button
-                type="button"
-                disabled={attendeesPage <= 1}
-                onClick={() => setAttendeesPage(attendeesPage - 1)}
-              >
+              <button type="button" disabled={page <= 1} onClick={() => setPage(page - 1)}>
                 Previous
               </button>
               <span>
-                Page {attendeesResult.page} of {attendeesResult.pages}
+                Page {page} of {totalPages}
               </span>
               <button
                 type="button"
-                disabled={attendeesPage >= attendeesResult.pages}
-                onClick={() => setAttendeesPage(attendeesPage + 1)}
+                disabled={page >= totalPages}
+                onClick={() => setPage(page + 1)}
               >
                 Next
               </button>

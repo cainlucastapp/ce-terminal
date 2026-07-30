@@ -24,6 +24,28 @@ dd {
   margin: var(--space-4) 0;
 }
 
+/* Attendee search */
+.attendee-search {
+  max-width: 420px;
+  margin: var(--space-4) 0;
+}
+
+.attendee-search label {
+  display: block;
+  margin-bottom: var(--space-1);
+  font-weight: bold;
+}
+
+.attendee-search-row {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.attendee-search-row input {
+  flex: 1;
+  min-width: 0;
+}
+
 /* Attendee table */
 .attendee-table {
   width: 100%;
