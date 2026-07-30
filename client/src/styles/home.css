@@ -4,6 +4,12 @@
 .home-page {
   text-align: center;
   padding: var(--space-6) 0;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.home-page.is-loaded {
+  opacity: 1;
 }
 
 .home-logo {

@@ -1,16 +1,24 @@
 // client/src/pages/HomePage.jsx
 
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import logo from '../assets/images/ce-terminal-logo.png'
 
 export function HomePage() {
-  return (
-    <section className="home-page">
-      <img src={logo} alt="CE Terminal" className="home-logo" />
+  // reveals the whole page at once, once the logo has loaded
+  const [isLoaded, setIsLoaded] = useState(false)
 
-      <p className="home-tagline">
-        Your CE certificates all in one place.
-      </p>
+  return (
+    <section className={`home-page${isLoaded ? ' is-loaded' : ''}`}>
+      <img
+        src={logo}
+        alt="CE Terminal"
+        className="home-logo"
+        onLoad={() => setIsLoaded(true)}
+        onError={() => setIsLoaded(true)}
+      />
+
+      <p className="home-tagline">Your CE certificates all in one place.</p>
 
       <div className="home-actions">
         <Link to="/student" className="button-link">
