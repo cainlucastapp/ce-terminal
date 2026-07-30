@@ -135,7 +135,7 @@ export function CourseDetailPage() {
           {pageItems.length === 0 ? (
             <p>{query ? 'No matching attendees.' : 'No attendees yet.'}</p>
           ) : (
-            <table className="attendee-table">
+            <table className="attendee-table data-table">
               <thead>
                 <tr>
                   <th>Student Name</th>

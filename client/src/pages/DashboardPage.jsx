@@ -1,6 +1,6 @@
 // client/src/pages/DashboardPage.jsx
 
-import { useEffect, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { AttendeeCsvImporter } from '../components/attendees/AttendeeCsvImporter'
 import { useAuth } from '../hooks/useAuth'
@@ -84,31 +84,51 @@ export function DashboardPage() {
           {result.items.length === 0 ? (
             <p>No courses yet.</p>
           ) : (
-            <ul className="course-list item-list">
-              {result.items.map((course) => (
-                <li key={course.id}>
-                  <Link to={`/courses/${course.id}`}>{course.course_name}</Link>
-                  {' — '}
-                  {course.course_number} — {course.state}
-                  <button type="button" onClick={() => handleStartImport(course)}>
-                    Import Attendees
-                  </button>
+            <table className="course-table data-table">
+              <thead>
+                <tr>
+                  <th>Course Name</th>
+                  <th>Course Number</th>
+                  <th>State</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                {result.items.map((course) => (
+                  <Fragment key={course.id}>
+                    <tr>
+                      <td>
+                        <Link to={`/courses/${course.id}`}>{course.course_name}</Link>
+                      </td>
+                      <td>{course.course_number}</td>
+                      <td>{course.state}</td>
+                      <td>
+                        <button type="button" onClick={() => handleStartImport(course)}>
+                          Import Attendees
+                        </button>
+                      </td>
+                    </tr>
 
-                  {/* inline importer */}
-                  {importingCourseId === course.id && (
-                    <div className="csv-import">
-                      <button type="button" onClick={() => setImportingCourseId(null)}>
-                        Cancel
-                      </button>
-                      <AttendeeCsvImporter
-                        courseId={course.id}
-                        onComplete={(errors) => handleImportComplete(course, errors)}
-                      />
-                    </div>
-                  )}
-                </li>
-              ))}
-            </ul>
+                    {/* inline importer */}
+                    {importingCourseId === course.id && (
+                      <tr>
+                        <td colSpan={4}>
+                          <div className="csv-import">
+                            <button type="button" onClick={() => setImportingCourseId(null)}>
+                              Cancel
+                            </button>
+                            <AttendeeCsvImporter
+                              courseId={course.id}
+                              onComplete={(errors) => handleImportComplete(course, errors)}
+                            />
+                          </div>
+                        </td>
+                      </tr>
+                    )}
+                  </Fragment>
+                ))}
+              </tbody>
+            </table>
           )}
 
           {/* pagination */}
