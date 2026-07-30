@@ -1,6 +1,7 @@
 // client/src/App.jsx
 
 import { Route, Routes } from 'react-router-dom'
+import { Footer } from './components/layout/Footer'
 import { Navbar } from './components/layout/Navbar'
 import { ProtectedRoute } from './components/layout/ProtectedRoute'
 import { CourseDetailPage } from './pages/CourseDetailPage'
@@ -31,6 +32,7 @@ function App() {
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </main>
+      <Footer />
     </>
   )
 }

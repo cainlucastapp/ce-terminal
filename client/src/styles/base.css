@@ -46,6 +46,13 @@ body {
   background: var(--color-bg);
 }
 
+/* keeps the footer pinned to the bottom, even on short pages */
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
 h1,
 h2,
 h3 {
@@ -68,9 +75,11 @@ a:focus-visible {
 
 /* Layout */
 main {
+  width: 100%;
   max-width: var(--max-width-content);
   margin: 0 auto;
   padding: var(--space-4);
+  flex: 1;
 }
 
 .pagination {
