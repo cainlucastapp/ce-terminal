@@ -46,7 +46,7 @@ body {
   background: var(--color-bg);
 }
 
-/* keeps the footer pinned to the bottom, even on short pages */
+/* keeps the footer pinned to the bottom */
 #root {
   display: flex;
   flex-direction: column;
@@ -104,6 +104,42 @@ main {
 
 .item-list li:last-child {
   border-bottom: 1px solid var(--color-border);
+}
+
+/* Data tables */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: var(--space-4) 0;
+  table-layout: fixed;
+}
+
+.data-table th {
+  padding: var(--space-2) var(--space-3);
+  border-bottom: 2px solid var(--color-border);
+  color: var(--color-text-muted);
+  text-align: left;
+}
+
+.data-table td {
+  padding: var(--space-3);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.data-table th:last-child,
+.data-table td:last-child {
+  width: 220px;
+  text-align: right;
+}
+
+.data-table td:last-child button:first-child {
+  margin-right: var(--space-2);
+}
+
+/* full-width row (e.g. an inline edit form spanning every column) */
+.data-table td[colspan] {
+  width: auto;
+  text-align: left;
 }
 
 /* Buttons */
