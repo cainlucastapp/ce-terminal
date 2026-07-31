@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { AttendeeForm } from '../components/attendees/AttendeeForm'
 import { AttendeeSearch } from '../components/attendees/AttendeeSearch'
+import { ConfirmDialog } from '../components/layout/ConfirmDialog'
 import { useAttendeeSearch } from '../hooks/useAttendeeSearch'
 import { deleteAttendee, updateAttendee } from '../services/attendees'
 import { deleteCourse, getCourse } from '../services/courses'
@@ -26,12 +27,16 @@ export function CourseDetailPage() {
     setPage,
     pageItems,
     totalPages,
+    attendeeCount,
     isLoading: isAttendeesLoading,
     error: attendeesError,
     refresh: refreshAttendees,
   } = useAttendeeSearch(courseId)
   const [editingAttendeeId, setEditingAttendeeId] = useState(null)
   const [deleteError, setDeleteError] = useState(null)
+
+  // pending delete confirmation: { type: 'course' } or { type: 'attendee', id, name }
+  const [confirmDelete, setConfirmDelete] = useState(null)
 
   // course fetch
   useEffect(() => {
@@ -49,19 +54,6 @@ export function CourseDetailPage() {
     load()
   }, [courseId])
 
-  // course delete handler
-  async function handleDeleteCourse() {
-    if (!window.confirm('Delete this course? This also deletes its attendees.')) {
-      return
-    }
-    try {
-      await deleteCourse(courseId)
-      navigate('/dashboard')
-    } catch (err) {
-      setError(err.message || 'failed to delete course')
-    }
-  }
-
   // attendee update handler
   async function handleUpdateAttendee(attendeeId, values) {
     await updateAttendee(courseId, attendeeId, values)
@@ -69,17 +61,28 @@ export function CourseDetailPage() {
     await refreshAttendees()
   }
 
-  // attendee delete handler
-  async function handleDeleteAttendee(attendeeId) {
-    if (!window.confirm('Delete this attendee record?')) {
-      return
+  // delete confirmation handlers
+  async function handleConfirmDelete() {
+    if (confirmDelete.type === 'course') {
+      try {
+        await deleteCourse(courseId)
+        navigate('/dashboard')
+      } catch (err) {
+        setError(err.message || 'failed to delete course')
+      }
+    } else {
+      try {
+        await deleteAttendee(courseId, confirmDelete.id)
+        await refreshAttendees()
+      } catch (err) {
+        setDeleteError(err.message || 'failed to delete attendee')
+      }
     }
-    try {
-      await deleteAttendee(courseId, attendeeId)
-      await refreshAttendees()
-    } catch (err) {
-      setDeleteError(err.message || 'failed to delete attendee')
-    }
+    setConfirmDelete(null)
+  }
+
+  function handleCancelDelete() {
+    setConfirmDelete(null)
   }
 
   if (isLoading) {
@@ -115,7 +118,11 @@ export function CourseDetailPage() {
         <Link to={`/courses/${course.id}/edit`} className="button-link">
           Edit
         </Link>
-        <button type="button" className="button-danger" onClick={handleDeleteCourse}>
+        <button
+          type="button"
+          className="button-danger"
+          onClick={() => setConfirmDelete({ type: 'course' })}
+        >
           Delete
         </button>
         <Link to="/dashboard">Back to dashboard</Link>
@@ -170,7 +177,13 @@ export function CourseDetailPage() {
                         <button
                           type="button"
                           className="button-danger"
-                          onClick={() => handleDeleteAttendee(attendee.id)}
+                          onClick={() =>
+                            setConfirmDelete({
+                              type: 'attendee',
+                              id: attendee.id,
+                              name: attendee.student_name,
+                            })
+                          }
                         >
                           Delete
                         </button>
@@ -202,6 +215,18 @@ export function CourseDetailPage() {
           )}
         </>
       )}
+
+      <ConfirmDialog
+        open={confirmDelete !== null}
+        title={confirmDelete?.type === 'course' ? 'Delete this course?' : 'Delete this attendee?'}
+        message={
+          confirmDelete?.type === 'course'
+            ? `This will permanently delete "${course.course_name}" and its ${attendeeCount} attendee${attendeeCount === 1 ? '' : 's'}. This cannot be undone.`
+            : `This will permanently delete ${confirmDelete?.name}. This cannot be undone.`
+        }
+        onConfirm={handleConfirmDelete}
+        onCancel={handleCancelDelete}
+      />
     </section>
   )
 }

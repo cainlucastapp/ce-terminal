@@ -95,6 +95,7 @@ export function useAttendeeSearch(courseId) {
     setPage,
     pageItems,
     totalPages,
+    attendeeCount: attendees.length,
     isLoading,
     error,
     refresh: loadRoster,

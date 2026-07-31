@@ -1,0 +1,25 @@
+/* client/src/styles/confirm-dialog.css */
+
+.confirm-dialog {
+  width: 90%;
+  max-width: 420px;
+  padding: var(--space-5);
+  border: none;
+  border-radius: var(--radius-sm);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.confirm-dialog::backdrop {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.confirm-dialog h2 {
+  margin-top: 0;
+}
+
+.confirm-dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-3);
+  margin-top: var(--space-5);
+}
