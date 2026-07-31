@@ -114,12 +114,10 @@ export function DashboardPage() {
                       <tr>
                         <td colSpan={4}>
                           <div className="csv-import">
-                            <button type="button" onClick={() => setImportingCourseId(null)}>
-                              Cancel
-                            </button>
                             <AttendeeCsvImporter
                               courseId={course.id}
                               onComplete={(errors) => handleImportComplete(course, errors)}
+                              onCancel={() => setImportingCourseId(null)}
                             />
                           </div>
                         </td>

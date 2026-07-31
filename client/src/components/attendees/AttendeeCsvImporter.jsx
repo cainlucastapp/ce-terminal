@@ -3,9 +3,10 @@
 import { useRef } from 'react'
 import { Importer, ImporterField } from 'react-csv-importer'
 import 'react-csv-importer/dist/index.css'
+import csvTemplateUrl from '../../assets/csvs/attendee-import-template.csv?url'
 import { createAttendee } from '../../services/attendees'
 
-export function AttendeeCsvImporter({ courseId, onComplete }) {
+export function AttendeeCsvImporter({ courseId, onComplete, onCancel }) {
   // failed-row accumulator
   const rowErrorsRef = useRef([])
 
@@ -33,10 +34,20 @@ export function AttendeeCsvImporter({ courseId, onComplete }) {
 
   // column definitions
   return (
-    <Importer dataHandler={handleData} restartable onComplete={handleComplete}>
-      <ImporterField name="student_name" label="Student Name" />
-      <ImporterField name="student_license_number" label="License Number" />
-      <ImporterField name="completion_date" label="Completion Date (YYYY-MM-DD)" />
-    </Importer>
+    <>
+      <div className="csv-import-header">
+        <a href={csvTemplateUrl} download>
+          Download CSV Template
+        </a>
+        <button type="button" onClick={onCancel}>
+          Cancel
+        </button>
+      </div>
+      <Importer dataHandler={handleData} restartable onComplete={handleComplete}>
+        <ImporterField name="student_name" label="Student Name" />
+        <ImporterField name="student_license_number" label="License Number" />
+        <ImporterField name="completion_date" label="Completion Date (YYYY-MM-DD)" />
+      </Importer>
+    </>
   )
 }
