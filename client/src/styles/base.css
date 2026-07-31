@@ -136,6 +136,14 @@ main {
   margin-right: var(--space-2);
 }
 
+.data-table tbody tr {
+  background: var(--color-surface);
+}
+
+.data-table tbody tr:nth-child(even) {
+  background: var(--color-bg);
+}
+
 /* full-width row (e.g. an inline edit form spanning every column) */
 .data-table td[colspan] {
   width: auto;
