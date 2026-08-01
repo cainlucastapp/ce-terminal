@@ -81,3 +81,4 @@ After running `python seed.py`:
 - Manual attendee input.
 - Expand to other states.
 - Billing system for providers.
+- User Profiles / Update Info
