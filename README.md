@@ -79,6 +79,8 @@ After running `python seed.py`:
 - Sortable attendee lists.
 - A public directory of providers who use CE Terminal.
 - Manual attendee input.
+- TESTS
+- Find a way to verify Provider authenticity 
 - Expand to other states.
 - Billing system for providers.
 - User Profiles / Update Info
